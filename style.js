@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 const homepage = StyleSheet.create({
     view: {
-        backgroundColor: '#00c5ea'
+        backgroundColor: 'rgb(169, 221, 242)'
     },
     title: {
         fontSize: 25,
