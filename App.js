@@ -30,21 +30,24 @@ function Homepage () {
 }
 
 function Connexion() {
-    const [text, setText] = useState('');
+    const [emailAddress, setEmailAddress] = useState('');
+    const [password, setPassword] = useState('');
     return (
-        <View>
-            <Text>Votre adresse email :</Text>
-            <TextInput name="emailAddress"style={{height: 40}}
+        <View style={{flex:1, flexDirection: "column", backgroundColor:"rgb(169, 221, 242)", justifyContent:"center", alignItems:"center"}}>
+            
+            <Text style={{width: 200, fontWeight:600, fontSize:20}}>Votre adresse email :</Text>
+            <TextInput name="emailAddress"style={{height: 40, width: 200, backgroundColor : "white"}}
                         placeholder="smith@gmail.com"
-                        onChangeText={newText => setText(newText)}
-                        defaultValue={text}/>
-            <Text>Votre mot de passe :</Text>            
+                        onChangeText={newText => setEmailAddress(newText)}
+                        defaultValue={emailAddress}/>
+            
+            <Text style={{width: 200, fontWeight:600, fontSize:20}}>Votre mot de passe :</Text>            
             <TextInput name="password" 
-                        style={{height: 40}}
-                        placeholder="sMot de passe"
-                        onChangeText={newText => setText(newText)}
-                        defaultValue={text}/>
-                
+                        style={{height: 40, width: 200, backgroundColor : "white"}}
+                        placeholder="Mot de passe"
+                        onChangeText={newText => setPassword(newText)}
+                        defaultValue={password}/>
+            
         </View>
     )
 }
@@ -56,7 +59,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Connexion">
             <Stack.Screen name="Homepage" component={Homepage} options={{title:'Accueil'}}/>
-            <Stack.Screen name="Connexion" component={Connexion} />
+            <Stack.Screen name="Connexion" component={Connexion}/>
         </Stack.Navigator> 
         </NavigationContainer>
     );
