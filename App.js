@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import {Image, Text, View, ScrollView, Button, TextInput} from 'react-native'
+import {Image, Text, View, ScrollView, Button, TextInput, Alert} from 'react-native'
 import homepage from "./style"
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -43,13 +43,35 @@ function Connexion() {
             
             <Text style={{width: 200, fontWeight:600, fontSize:20}}>Votre mot de passe :</Text>            
             <TextInput name="password" 
-                        style={{height: 40, width: 200, backgroundColor : "white"}}
+                        style={{height: 40, width: 200, backgroundColor : "white" , marginBottom: 20}}
                         placeholder="Mot de passe"
                         onChangeText={newText => setPassword(newText)}
                         defaultValue={password}/>
+            <Button title="Se connecter"
+                onPress={() => Alert.alert('Simple Button pressed')}/>
             
         </View>
     )
+}
+
+function YourAccount() {
+    return (
+            <View style={{ flex:1, justifyContent: "center", flexDirection:"column", alignItems:"center", backgroundColor:"rgb(169, 221, 242)"}}>
+                <Text style={{marginVertical:10, fontWeight:600, fontSize:20}}>Vos informations personnelles :</Text>
+                <Text style={{marginVertical:10, fontWeight:400, fontSize:16}}>Prénom : John</Text>
+                <Text style={{marginVertical:10, fontWeight:400, fontSize:16}}>Nom : Smith</Text>
+                <Text style={{marginVertical:10, fontWeight:400, fontSize:16}}>Sécurité sociale : 123456789</Text>
+                <Text style={{marginVertical:10, fontWeight:400, fontSize:16}}>Adresse mail : jsmith@gmail.com</Text>
+                <Text style={{marginVertical:10, fontWeight:400, fontSize:16}}>Téléphone : 0674352689</Text>
+                <View>
+                <Button title="Vos réservations"
+                        onPress={() => Alert.alert('Simple Button pressed')}
+                        style={{ width: 400 }}/>
+                <Button title="Vos alarmes"
+                        onPress={() => Alert.alert('Simple Button pressed')}/>
+                </View>
+            </View>
+)
 }
 
 const Stack = createNativeStackNavigator();
@@ -57,9 +79,10 @@ const Stack = createNativeStackNavigator();
 export default function App() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Connexion">
+        <Stack.Navigator initialRouteName="YourAccount">
             <Stack.Screen name="Homepage" component={Homepage} options={{title:'Accueil'}}/>
             <Stack.Screen name="Connexion" component={Connexion}/>
+            <Stack.Screen name="YourAccount" component={YourAccount} options={{title:'Votre compte'}}/>
         </Stack.Navigator> 
         </NavigationContainer>
     );
