@@ -71,7 +71,21 @@ function YourAccount() {
                         onPress={() => Alert.alert('Simple Button pressed')}/>
                 </View>
             </View>
-)
+    )
+}
+
+function Reservations() {
+    return (
+    <View style={{ flex:1, justifyContent: "space-evenly", flexDirection:"column", alignItems:"center", backgroundColor:"rgb(169, 221, 242)"}}>
+        <View style={{flex:1, alignItems:"center"}}>
+            <Text style={{marginVertical:10, fontWeight:400, fontSize:16}}>Date : 06/04/24 - Heure : 14h30</Text>
+            <Text style={{marginVertical:10, fontWeight:400, fontSize:16}}>Centre de Paris</Text>
+            <Text style={{marginVertical:10, fontWeight:400, fontSize:16}}>Docteur : Tartempion</Text>
+            <Text>____________________________________</Text>
+        </View>
+
+    </View>
+    )
 }
 
 const Stack = createNativeStackNavigator();
@@ -79,10 +93,11 @@ const Stack = createNativeStackNavigator();
 export default function App() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="YourAccount">
+        <Stack.Navigator initialRouteName="Reservations">
             <Stack.Screen name="Homepage" component={Homepage} options={{title:'Accueil'}}/>
             <Stack.Screen name="Connexion" component={Connexion}/>
             <Stack.Screen name="YourAccount" component={YourAccount} options={{title:'Votre compte'}}/>
+            <Stack.Screen name="Reservations" component={Reservations} options={{title:'Vos rendez-vous'}}/>
         </Stack.Navigator> 
         </NavigationContainer>
     );
