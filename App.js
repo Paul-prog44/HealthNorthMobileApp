@@ -1,15 +1,16 @@
-import React, {useState} from "react"
+import React, {useState } from "react"
 import {Image, Text, View, ScrollView, Button, TextInput, Alert} from 'react-native'
 import homepage from "./style"
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import RNFetchBlob from "rn-fetch-blob";
 
 
 
-function Homepage () {
+function Homepage ({navigation}) {
     return (
+        <>
         <ScrollView style={homepage.view}>
-                    <Text style={homepage.title}>Votre application North Health</Text>
                     <Text style={homepage.presentation}> La société HEALTH NORTH fait partie des leaders européens sur les prélèvements médicaux pour les particuliers.
                         Fondé en 1987 avec l'ouverture de trois laboratoires diagnostiques et d'imagerie au Danemark, le
                         groupe s'est rapidement développé en appliquant une stratégie d'acquisition de laboratoires
@@ -25,7 +26,16 @@ function Homepage () {
                         <Image source={require('./img/alexandr-podvalny-tE7_jvK-_YU-unsplash.jpg')}
                         style={homepage.image}/>
                     </View>
-            </ScrollView>
+        </ScrollView>
+        <View style={{backgroundColor:"rgb(169, 221, 242)", height:50}} >
+            <View style={{ flex:1, flexDirection: "row", justifyContent: "space-between"}}>
+            <Button title="Votre compte"
+            onPress={() => navigation.navigate('YourAccount')}/>
+            <Button title="Vos réservations"
+            onPress={() => navigation.navigate('Reservations')}/>                                
+            </View>
+        </View>
+        </>
     )
 }
 
@@ -54,7 +64,7 @@ function Connexion() {
     )
 }
 
-function YourAccount() {
+function YourAccount({navigation}) {
     return (
             <View style={{ flex:1, justifyContent: "center", flexDirection:"column", alignItems:"center", backgroundColor:"rgb(169, 221, 242)"}}>
                 <Text style={{marginVertical:10, fontWeight:600, fontSize:20}}>Vos informations personnelles :</Text>
@@ -65,7 +75,7 @@ function YourAccount() {
                 <Text style={{marginVertical:10, fontWeight:400, fontSize:16}}>Téléphone : 0674352689</Text>
                 <View>
                 <Button title="Vos réservations"
-                        onPress={() => Alert.alert('Simple Button pressed')}
+                        onPress={() => navigation.navigate('Reservations')}
                         style={{ width: 400 }}/>
                 <Button title="Vos alarmes"
                         onPress={() => Alert.alert('Simple Button pressed')}/>
@@ -74,14 +84,36 @@ function YourAccount() {
     )
 }
 
+const { config, fs } = RNFetchBlob;
 function Reservations() {
+    function fechtApi() {
+        RNFetchBlob.config({
+            trusty : true
+          })
+          .fetch('get', 'https://192.168.1.109:8000/api/doctors/430') //Adresse IP de l'ordinateur (127.0.0.1 est celle du smartphone...)
+          .then((resp) => {
+            console.log(resp.data)
+          })
+          .catch((error) => {
+            console.error('Error downloading file: ', error);
+          });
+        };
+    
+
+
+
+
+   
     return (
+        
     <View style={{ flex:1, justifyContent: "space-evenly", flexDirection:"column", alignItems:"center", backgroundColor:"rgb(169, 221, 242)"}}>
         <View style={{flex:1, alignItems:"center"}}>
             <Text style={{marginVertical:10, fontWeight:400, fontSize:16}}>Date : 06/04/24 - Heure : 14h30</Text>
             <Text style={{marginVertical:10, fontWeight:400, fontSize:16}}>Centre de Paris</Text>
             <Text style={{marginVertical:10, fontWeight:400, fontSize:16}}>Docteur : Tartempion</Text>
             <Text>____________________________________</Text>
+            <Button title="Recharger l'API" onPress={() => fechtApi()} />
+
         </View>
 
     </View>
@@ -93,8 +125,8 @@ const Stack = createNativeStackNavigator();
 export default function App() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Reservations">
-            <Stack.Screen name="Homepage" component={Homepage} options={{title:'Accueil'}}/>
+        <Stack.Navigator initialRouteName="Homepage">
+            <Stack.Screen name="Homepage" component={Homepage} options={{title:'Votre Application Health North'}}/>
             <Stack.Screen name="Connexion" component={Connexion}/>
             <Stack.Screen name="YourAccount" component={YourAccount} options={{title:'Votre compte'}}/>
             <Stack.Screen name="Reservations" component={Reservations} options={{title:'Vos rendez-vous'}}/>
