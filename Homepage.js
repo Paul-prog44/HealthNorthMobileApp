@@ -3,6 +3,7 @@ import homepage from "./style"
 
 
 
+
 export default function Homepage ({navigation}) {
     return (
         <>
@@ -24,9 +25,14 @@ export default function Homepage ({navigation}) {
                     </View>
         </ScrollView>
         <View style={{backgroundColor:"rgb(169, 221, 242)", height:50}} >
-            <View style={{ flex:1, flexDirection: "row", justifyContent: "space-between"}}>
+            <View style={{ flex:1, flexDirection: "row", justifyContent:"space-between"}}>
+
             <Button title="Votre compte"
             onPress={() => navigation.navigate('YourAccount')}/>
+
+            {/* <Button title="Connexion"
+            onPress={() => navigation.navigate('Connexion')}/> */}
+
             <Button title="Vos réservations"
             onPress={() => navigation.navigate('Reservations')}/>                                
             </View>
