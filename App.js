@@ -13,7 +13,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Homepage">
+        <Stack.Navigator initialRouteName="Connexion">
             <Stack.Screen name="Homepage" component={Homepage} options={{title:'Votre Application Health North'}}/>
             <Stack.Screen name="Connexion" component={Connexion}/>
             <Stack.Screen name="YourAccount" component={YourAccount} options={{title:'Votre compte'}}/>
