@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs');
 export default function Connexion({navigation}) {
     const [emailAddress, setEmailAddress] = useState('');
     const [password, setPassword] = useState('');
-    const [users, setUser] = useState(null);
+    const [allUsers, setUser] = useState();
 
     useEffect(() => {
       function fetchUsers() {
@@ -25,6 +25,20 @@ export default function Connexion({navigation}) {
         }
         fetchUsers()
     }, [])
+
+    function checkCredentials() {        
+        for (let user of allUsers) {
+            if (user.emailAddress == emailAddress ) {
+                bcrypt.compare(password, user.password, function(err, result) {
+                    if (result) {
+                        navigation.navigate('Homepage')
+                        userId = user.id
+                    } 
+                })            
+            }
+        }
+        
+    }
         
     return (
         <View style={{flex:1, flexDirection: "column", backgroundColor:"rgb(169, 221, 242)", justifyContent:"center", alignItems:"center"}}>
@@ -42,7 +56,9 @@ export default function Connexion({navigation}) {
                         onChangeText={newText => setPassword(newText)}
                         defaultValue={password}/>
             <Button title="Se connecter"
-                onPress={() => navigation.navigate('Homepage')}/>
+                onPress={() => {
+                    checkCredentials()
+                }}/>
             
         </View>
     )
