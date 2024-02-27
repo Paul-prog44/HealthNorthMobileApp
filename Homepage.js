@@ -4,7 +4,9 @@ import homepage from "./style"
 
 
 
-export default function Homepage ({navigation}) {
+export default function Homepage ({navigation, route}) {
+    const { user } =  route.params //récupération du user
+
     return (
         <>
         <ScrollView style={homepage.view}>
@@ -28,13 +30,17 @@ export default function Homepage ({navigation}) {
             <View style={{ flex:1, flexDirection: "row", justifyContent:"space-between"}}>
 
             <Button title="Votre compte"
-            onPress={() => navigation.navigate('YourAccount')}/>
+            onPress={() => navigation.navigate('YourAccount',
+            { user : user})
+            }/>
 
             {/* <Button title="Connexion"
             onPress={() => navigation.navigate('Connexion')}/> */}
 
             <Button title="Vos réservations"
-            onPress={() => navigation.navigate('Reservations')}/>                                
+            onPress={() => navigation.navigate('Reservations',
+            { user : user}
+            )}/>                                
             </View>
         </View>
         </>

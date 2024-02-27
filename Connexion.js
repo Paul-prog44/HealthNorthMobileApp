@@ -1,8 +1,8 @@
 import React, {useState, useEffect } from "react"
 import {Image, Text, View, ScrollView, Button, TextInput, Alert} from 'react-native'
 import RNFetchBlob from 'rn-fetch-blob';
-const bcrypt = require('bcryptjs');
 
+const bcrypt = require('bcryptjs');
 
 
 export default function Connexion({navigation}) {
@@ -24,20 +24,19 @@ export default function Connexion({navigation}) {
           });
         }
         fetchUsers()
-    }, [])
+    }, []) // Le tableau vide en tant que deuxième argument signifie que useEffect s'exécutera une seule fois après le montage du composant
 
-    function checkCredentials() {        
+    function checkCredentials() {
         for (let user of allUsers) {
             if (user.emailAddress == emailAddress ) {
                 bcrypt.compare(password, user.password, function(err, result) {
                     if (result) {
-                        navigation.navigate('Homepage')
-                        userId = user.id
+                        navigation.navigate('Homepage',
+                        { user : user})
                     } 
                 })            
             }
-        }
-        
+        } 
     }
         
     return (
@@ -54,6 +53,7 @@ export default function Connexion({navigation}) {
                         style={{height: 40, width: 200, backgroundColor : "white" , marginBottom: 20}}
                         placeholder="Mot de passe"
                         onChangeText={newText => setPassword(newText)}
+                        secureTextEntry={true}
                         defaultValue={password}/>
             <Button title="Se connecter"
                 onPress={() => {
