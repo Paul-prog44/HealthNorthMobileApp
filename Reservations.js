@@ -1,39 +1,83 @@
-import RNFetchBlob from "rn-fetch-blob";
-import {Image, Text, View, ScrollView, Button, TextInput, Alert} from 'react-native'
+import RNFetchBlob from 'rn-fetch-blob';
+import {
+  Text,
+  View,
+} from 'react-native';
+import {useState, useEffect} from 'react';
 
+export default function Reservations({route}) {
+  const {user} = route.params;
+  let [reservationsArray, setReservations] = useState();
 
-export default function Reservations( {route}) {
-  const { user } =  route.params
-  let medicalFile
-
-  function fetchApi() {
+  useEffect(() => {
+    function fetchApi() {
       RNFetchBlob.config({
-          trusty : true
+        trusty: true,
+      })
+        .fetch(
+          'get',
+          'https://192.168.1.109:8000/api/medicalFiles/' + user.medicalFile.id,
+        ) //Adresse IP de l'ordinateur (127.0.0.1 est celle du smartphone...)
+        .then(resp => {
+          let medicalFile = JSON.parse(resp.data);
+          setReservations(medicalFile.reservations);
         })
-        .fetch('get', 'https://192.168.1.109:8000/api/medicalFiles/' + user.medicalFile.id) //Adresse IP de l'ordinateur (127.0.0.1 est celle du smartphone...)
-        .then((resp) => {
-          medicalFile = JSON.parse(resp.data)
-          console.log(  medicalFile.reservations)
-        })
-        .catch((error) => {
+        .catch(error => {
           console.error('Error downloading file: ', error);
         });
+    }
+
+    fetchApi();
+  }, []);
+
+  if (reservationsArray) {
+    console.log(reservationsArray);
+  }
+
+  const Reservation = ({reservation}) => {
+    const dateString = reservation.date;
+    const dateObject = new Date(dateString);
+    const options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      timeZone: 'Europe/Paris',  //Fuseau horaire français
+    };
+
+    return (
+      <View style={{flex: 1, alignItems: 'center'}}>
+        <Text style={{marginVertical: 10, fontWeight: 400, fontSize: 16}}>
+          Date : {dateObject.toLocaleTimeString('fr-FR', options)}
+        </Text>
+        <Text style={{marginVertical: 10, fontWeight: 400, fontSize: 16}}>
+          {reservation.center.name}
+        </Text>
+        <Text style={{marginVertical: 10, fontWeight: 400, fontSize: 16}}>
+          Docteur : {reservation.doctor.lastName}
+        </Text>
+        <Text>____________________________________</Text>
+      </View>
+    );
   };
 
-  fetchApi()
-
-  const Reservation = () => {
-    return  <View style={{flex:1, alignItems:"center"}}>
-              <Text style={{marginVertical:10, fontWeight:400, fontSize:16}}>Date : 06/04/24 - Heure : 14h30</Text>
-              <Text style={{marginVertical:10, fontWeight:400, fontSize:16}}>Centre de Paris</Text>
-              <Text style={{marginVertical:10, fontWeight:400, fontSize:16}}>Docteur : Tartempion</Text>
-              <Text>____________________________________</Text>
-              <Button title="Recharger l'API" onPress={() => fetchApi()} />
-            </View>
-          
-  }
-  
-  return <View style={{ flex:1, justifyContent: "space-evenly", flexDirection:"column", alignItems:"center", backgroundColor:"rgb(169, 221, 242)"}}>
-              
-         </View>
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'space-evenly',
+        flexDirection: 'column',
+        alignItems: 'center',
+        backgroundColor: 'rgb(169, 221, 242)',
+      }}>
+      {reservationsArray === undefined
+        ? null
+        : reservationsArray.map((reservation, index) => (
+            <Reservation key={index} reservation={reservation} />
+          ))}
+    </View>
+  );
 }
