@@ -1,4 +1,4 @@
-import {Image, Text, View, ScrollView, Button, TextInput, Alert} from 'react-native'
+import {Image, Text, View, ScrollView, Button} from 'react-native'
 import homepage from "./style"
 
 
