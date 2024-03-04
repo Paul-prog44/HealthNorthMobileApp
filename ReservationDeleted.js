@@ -14,12 +14,8 @@ export default function ReservationDeleted({navigation, route}) {
       }}>
       <Text fontSize="20" fontWeight='bold'>Votre réservation a bien été supprimée.</Text>
       <Button
-        title="Accueil"
-        onPress={() => navigation.navigate('Homepage', {user: user})}
-      />
-      <Button
-        title="Vos réservations"
-        onPress={() => navigation.navigate('Reservations', {user: user})}
+        title="Votre compte"
+        onPress={() => navigation.navigate('YourAccount', {user: user})}
       />
     </View>
   );

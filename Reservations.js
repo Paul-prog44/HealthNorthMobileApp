@@ -8,7 +8,7 @@ import {useState, useEffect} from 'react';
 
 export default function Reservations({route, navigation}) {
   const {user} = route.params;
-  let [reservationsArray, setReservations] = useState();
+  let [reservationsArray, setReservations] = useState([]);
 
   useEffect(() => {
     function fetchApi() {
@@ -22,6 +22,7 @@ export default function Reservations({route, navigation}) {
         .then(resp => {
           let medicalFile = JSON.parse(resp.data);
           setReservations(medicalFile.reservations);
+          console.log(medicalFile.reservations)
         })
         .catch(error => {
           console.error('Error downloading file: ', error);
@@ -42,7 +43,7 @@ export default function Reservations({route, navigation}) {
       ) //Adresse IP de l'ordinateur (127.0.0.1 est celle du smartphone...)
       .then(resp => {
         if (resp.respInfo.status === 204) {
-          //TODO redirection vers confirmation de suppression
+          //redirection vers confirmation de suppression
           navigation.navigate('ReservationDeleted',  {user : user})
         }
       })
@@ -51,7 +52,7 @@ export default function Reservations({route, navigation}) {
       });
   }
 
-  
+
 
 
   const Reservation = ({reservation}) => {
@@ -71,6 +72,7 @@ export default function Reservations({route, navigation}) {
     
 
     return (
+
       <View style={{flex: 1, alignItems: 'center'}}>
         <Text style={{marginVertical: 5, fontWeight: 400, fontSize: 16}}>
           Date : {dateObject.toLocaleTimeString('fr-FR', options)}
@@ -88,6 +90,7 @@ export default function Reservations({route, navigation}) {
     );
   };
 
+
   return (
     <View
       style={{
@@ -97,8 +100,8 @@ export default function Reservations({route, navigation}) {
         alignItems: 'center',
         backgroundColor: 'rgb(169, 221, 242)',
       }}>
-      {reservationsArray === undefined
-        ? null
+      {reservationsArray.length === 0
+        ?<Text>Vous n'avez pas de réservation</Text>
         : reservationsArray.map((reservation, index) => (
             <Reservation key={index} reservation={reservation} />
           ))}

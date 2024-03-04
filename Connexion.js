@@ -67,7 +67,7 @@ export default function Connexion({navigation}) {
     return (
         <View style={{flex:1, flexDirection: "column", backgroundColor:"rgb(169, 221, 242)", justifyContent:"center", alignItems:"center"}}>
             {missingCredentials && <Text style={{width: 200, fontWeight:600, fontSize:20, color:'red'}}>Veuillez renseigner tous les champs</Text>}
-            {invalidCredentials && <Text style={{width: 200, fontWeight:600, fontSize:20, color:'red'}}>Mots de passe ou identifiants erronés</Text>}
+            {invalidCredentials && <Text style={{width: 200, fontWeight:600, fontSize:20, color:'red'}}>Mot de passe ou identifiants erronés</Text>}
             <Text style={{width: 200, fontWeight:600, fontSize:20}}>Votre adresse email :</Text>
             <TextInput name="emailAddress"style={{height: 40, width: 200, backgroundColor : "white"}}
                         placeholder="smith@gmail.com"
