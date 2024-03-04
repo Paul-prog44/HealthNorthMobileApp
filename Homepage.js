@@ -1,12 +1,37 @@
-import {Image, Text, View, ScrollView, Button} from 'react-native'
+import {Image, Text, View, ScrollView, Button, FlatList} from 'react-native'
 import homepage from "./style"
-
+import { useEffect, useState } from 'react';
+import RNFetchBlob from 'rn-fetch-blob';
 
 
 
 export default function Homepage ({navigation, route}) {
     const { user } =  route.params //récupération du user
+    const [specialtiesArray, setSpecialtiesArray] = useState([])
 
+
+    useEffect(() => {
+        function fetchSpecialties() {
+          RNFetchBlob.config({
+            trusty: true,
+          })
+            .fetch(
+              'get',
+              'https://192.168.1.109:8000/api/specialties',
+            ) //Adresse IP de l'ordinateur (127.0.0.1 est celle du smartphone...)
+            .then(resp => {
+              let specialtiesApi = JSON.parse(resp.data);
+              setSpecialtiesArray(specialtiesApi);
+            })
+            .catch(error => {
+              console.error('Error downloading file: ', error);
+            });
+        }
+      
+        fetchSpecialties();
+      }, []);
+
+      
     return (
         <>
         <ScrollView style={homepage.view}>
@@ -19,11 +44,14 @@ export default function Homepage ({navigation, route}) {
                         devient alors le leader incontesté des services diagnostiques et d'hospitalisation en Europe.
                         Health NORTH exploite son expertise en médecine de laboratoire, en imagerie et en pathologie pour
                         fournir des réponses aux questions diagnostiques dans toutes les disciplines médicales. Notre
-                        catalogue de services couvre tous les aspects du diagnostic, notamment dans les domaines suivants :
+                        catalogue de services couvre toutes les spécialités médicales, notamment dans les domaines suivants :
                     </Text>
                     <View style={homepage.imageView}>
                         <Image source={require('./img/alexandr-podvalny-tE7_jvK-_YU-unsplash.jpg')}
                         style={homepage.image}/>
+                        {specialtiesArray.map((specialty)=>
+                            <Text style={{fontWeight: '700', padding: 5}}>{specialty.name}</Text>
+                        )}
                     </View>
         </ScrollView>
         <View style={{backgroundColor:"rgb(169, 221, 242)", height:50}} >
