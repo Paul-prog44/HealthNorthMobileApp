@@ -1,5 +1,3 @@
-import React, {useState } from "react"
-import {Image, Text, View, ScrollView, Button, TextInput, Alert} from 'react-native'
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Connexion from "./Connexion";
