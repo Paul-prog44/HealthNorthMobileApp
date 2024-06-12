@@ -36,31 +36,42 @@ export default function Connexion({navigation}) {
 
       useEffect(() => {
         if (user) {
-          navigation.navigate('Homepage', { user })
+          navigation.navigate('Homepage', { user });
         }
       }, [user, ])
+
+
         
     return (
         <View style={{flex:1, flexDirection: "column", backgroundColor:"rgb(169, 221, 242)", justifyContent:"center", alignItems:"center"}}>
-            {invalidCredentials && <Text style={{width: 200, fontWeight:600, fontSize:20, color:'red'}}>Mot de passe ou identifiants erronés</Text>}
+            {invalidCredentials && <Text style={{width: 200, fontWeight:600, fontSize:20, color:'red'}}>Mot de passe ou identifiant erroné</Text>}
             <Text style={{width: 200, fontWeight:600, fontSize:20}}>Votre adresse email :</Text>
-            <TextInput name="emailAddress"style={{height: 40, width: 200, backgroundColor : "white"}}
+
+            <TextInput name="emailAddress"style={{height: 40, width: 200, backgroundColor : "white", borderColor: 'gray',
+    borderWidth: 1,}}
                         placeholder="smith@gmail.com"
                         onChangeText={newText => setEmailAddress(newText)}
                         defaultValue={emailAddress}/>
             
-            <Text style={{width: 200, fontWeight:600, fontSize:20}}>Votre mot de passe :</Text>            
+            <Text style={{width: 200, fontWeight:600, fontSize:20}}>Votre mot de passe :</Text>
+
             <TextInput name="password" 
-                        style={{height: 40, width: 200, backgroundColor : "white" , marginBottom: 20}}
+                        style={{height: 40, width: 200, backgroundColor : "white" , marginBottom: 20, borderColor: 'gray',
+                          borderWidth: 1,}}
                         placeholder="Mot de passe"
                         onChangeText={newText => setPassword(newText)}
                         secureTextEntry={true}
                         defaultValue={password}/>
+
             <Button title="Se connecter"
-                onPress={() => {
-                  fetchUsers()
-                }}/>
-            
+                    onPress={() => {
+                     fetchUsers()
+                    }}/>
+            <Button title="Créer un compte"
+                    onPress={() => {
+                      navigation.navigate('AccountCreation')
+                    }}
+            ></Button>
         </View>
     )
 }
