@@ -16,8 +16,9 @@ export default function AccountCreation({navigation}) {
         passwordConfirmation:"",
         socialSecurity:""
     })
-    const [errorCreatingUser, setErrorCreatingUser] = useState(false)
+    const [error, setError] = useState("")
     const [user, setUser] = useState('')
+
 
 
     function postUser() {
@@ -35,7 +36,7 @@ export default function AccountCreation({navigation}) {
               setUser(userArray)
               console.log(userArray)
             } else {
-                setErrorCreatingUser(true)
+                setError("Une erreur est survenue, merci de réessayer")
             }
           })
           .catch((error) => {
@@ -43,8 +44,21 @@ export default function AccountCreation({navigation}) {
           });
       }
 
+    //Vérification des inputs
     handleSubmit = (() => {
-        postUser()
+        if (newUser.address && newUser.city && newUser.emailAddress && newUser.firstName && 
+            newUser.gender && newUser.lastName && newUser.password && newUser.passwordConfirmation
+            && newUser.socialSecurity) {
+            if (newUser.password === newUser.passwordConfirmation) {
+                postUser()
+            } else {
+                setError("Les mots de passe ne sont pas identiques")
+            }
+        } else {
+            setError("Veuillez renseigner tous les champs")
+        }
+        
+
     })
 
     useEffect(() => {
@@ -66,7 +80,7 @@ export default function AccountCreation({navigation}) {
             <MyInput label="Adresse email" placeholder="bdurant@caramail.com" inputMode="email" setNewUser={setNewUser} name="emailAddress"/>
             <MyInput label="Mot de passe" placeholder="" secure={true} setNewUser={setNewUser} name="password"/>
             <MyInput label="Vérification mot de passe" placeholder="" secure={true} setNewUser={setNewUser} name="passwordConfirmation"/>
-            {errorCreatingUser && <Text style={{color:"red"}}>Une erreur est survenu, merci de réessayer</Text>}
+            {error && <Text style={{color:"red"}}>{error}</Text>}
             <Button title="Créer mon compte" onPress={handleSubmit}/>
 
         </ScrollView>
