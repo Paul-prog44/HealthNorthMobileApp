@@ -1,10 +1,10 @@
 import { Button, ScrollView, Text} from 'react-native'
 import MyInput from './components/MyInput';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RNFetchBlob from 'rn-fetch-blob';
 
 
-export default function AccountCreation() {
+export default function AccountCreation({navigation}) {
     const [newUser, setNewUser] = useState({
         gender:"",
         lastName:"",
@@ -16,7 +16,9 @@ export default function AccountCreation() {
         passwordConfirmation:"",
         socialSecurity:""
     })
-    const [errorCreatingUser, setErrorCreatingUser] = useState("")
+    const [errorCreatingUser, setErrorCreatingUser] = useState(false)
+    const [user, setUser] = useState('')
+
 
     function postUser() {
         RNFetchBlob.config({ trusty: true })
@@ -31,8 +33,9 @@ export default function AccountCreation() {
             if (resp.respInfo.status === 201) {
               let userArray = JSON.parse(resp.data)
               setUser(userArray)
+              console.log(userArray)
             } else {
-            //   setInvalidCredentials(true)
+                setErrorCreatingUser(true)
             }
           })
           .catch((error) => {
@@ -44,12 +47,16 @@ export default function AccountCreation() {
         postUser()
     })
 
+    useEffect(() => {
+        if (user) {
+        navigation.navigate('Homepage', { user });
+        }
+    }, [user, ])
+
     
 
     return (
         <ScrollView style={{flex:1, flexDirection:"column", backgroundColor:"rgb(169, 221, 242)"}}>
-                    <Text>{newUser.gender}</Text>
-
             <MyInput label="Sexe" placeholder="M" inputMode="text" setNewUser={setNewUser} name="gender"/>
             <MyInput label="Nom" placeholder="Durant" inputMode="text" setNewUser={setNewUser} name="lastName"/>
             <MyInput label="Prénom" placeholder="Benard" inputMode="text" setNewUser={setNewUser} name="firstName"/>
@@ -59,7 +66,7 @@ export default function AccountCreation() {
             <MyInput label="Adresse email" placeholder="bdurant@caramail.com" inputMode="email" setNewUser={setNewUser} name="emailAddress"/>
             <MyInput label="Mot de passe" placeholder="" secure={true} setNewUser={setNewUser} name="password"/>
             <MyInput label="Vérification mot de passe" placeholder="" secure={true} setNewUser={setNewUser} name="passwordConfirmation"/>
-            {errorCreatingUser && "Une erreur est survenu, merci de réessayer"}
+            {errorCreatingUser && <Text style={{color:"red"}}>Une erreur est survenu, merci de réessayer</Text>}
             <Button title="Créer mon compte" onPress={handleSubmit}/>
 
         </ScrollView>
