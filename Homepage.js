@@ -50,7 +50,15 @@ export default function Homepage ({navigation, route}) {
                         <Image source={require('./img/alexandr-podvalny-tE7_jvK-_YU-unsplash.jpg')}
                         style={homepage.image}/>
                         {specialtiesArray.map((specialty)=>
-                            <Text style={{fontWeight: '700', padding: 5}} key={specialty.name}>{specialty.name}</Text>
+                            <Text style={{
+                                fontWeight: '700', 
+                                padding: 5, 
+                                fontSize:20
+                              }} 
+                              key={specialty.name}
+                            >
+                              {specialty.name}
+                            </Text>
                         )}
                     </View>
         </ScrollView>

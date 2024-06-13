@@ -10,7 +10,7 @@ const homepage = StyleSheet.create({
         fontWeight: "600"
     },
     presentation: {
-        fontSize: 16,
+        fontSize: 18,
         margin:25
     },
     image: {

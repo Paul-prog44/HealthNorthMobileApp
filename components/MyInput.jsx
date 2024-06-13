@@ -21,11 +21,11 @@ export default function mMInput({label, placeholder, inputMode, secure, setNewUs
             <TextInput
                 style={{
                     height: 40, 
-                        width: 300, 
-                        backgroundColor : "white" , 
-                        marginBottom: 20, 
-                        borderColor: 'gray',
-                        borderWidth: 1
+                    width: 300, 
+                    backgroundColor : "white" , 
+                    marginBottom: 20, 
+                    borderColor: 'gray',
+                    borderWidth: 1
                     }}
                 placeholder={placeholder}
                 inputMode={inputMode}
