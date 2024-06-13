@@ -2,7 +2,8 @@ import RNFetchBlob from 'rn-fetch-blob';
 import {
   Text,
   View,
-  Button
+  Button,
+  ScrollView
 } from 'react-native';
 import {useState, useEffect} from 'react';
 
@@ -65,7 +66,6 @@ export default function Reservations({route, navigation}) {
       day: 'numeric',
       hour: 'numeric',
       minute: 'numeric',
-      second: 'numeric',
       timeZone: 'Europe/Paris',  //Fuseau horaire français
     };
 
@@ -92,19 +92,11 @@ export default function Reservations({route, navigation}) {
 
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'space-evenly',
-        flexDirection: 'column',
-        alignItems: 'center',
-        backgroundColor: 'rgb(169, 221, 242)',
-      }}>
-      {reservationsArray.length === 0
-        ?<Text>Vous n'avez pas de réservation</Text>
-        : reservationsArray.map((reservation, index) => (
+    <ScrollView style={{backgroundColor: 'rgb(169, 221, 242)'}}>
+    {reservationsArray.length === 0 &&<Text>Vous n'avez pas de réservation</Text>}
+      {reservationsArray.map((reservation, index) => (
             <Reservation key={index} reservation={reservation} />
           ))}
-    </View>
+    </ScrollView>
   );
 }
