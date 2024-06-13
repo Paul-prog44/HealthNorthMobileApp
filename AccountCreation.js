@@ -47,13 +47,44 @@ export default function AccountCreation({navigation}) {
           });
       }
 
+    //Vérification de la complexité du mot de passe
+      function checkPassword(password) {
+        const requiredPoints = 10;
+        const length = password.length;
+        let points_length = 0;
+        let points_comp = 0;
+        
+        if (length >= 10) {
+            points_length += 1;
+        }
+        if (/[a-z]/.test(password)) {
+            points_comp += 1;
+        }
+        if (/[A-Z]/.test(password)) {
+            points_comp += 2;
+        }
+        if (/[0-9]/.test(password)) {
+            points_comp += 3;
+        }
+        if (/\W/.test(password)) {
+            points_comp += 4;
+        }
+        
+        const results = points_length * points_comp;
+        return (results === requiredPoints);
+    }
+
     //Vérification des inputs
     handleSubmit = (() => {
         if (newUser.address && newUser.city && newUser.emailAddress && newUser.firstName && 
             newUser.gender && newUser.lastName && newUser.password && newUser.passwordConfirmation
             && newUser.socialSecurity && newUser.acceptCgu=== true ) {
             if (newUser.password === newUser.passwordConfirmation) {
-                postUser()
+                if (checkPassword(newUser.password)) {
+                    postUser()
+                } else {
+                    setError("Le mot de passe doit comporter au moins 10 caractères, une minuscule, une majuscule et un caractère spécial.")
+                }
             } else {
                 setError("Les mots de passe ne sont pas identiques")
             }
