@@ -68,7 +68,7 @@ export default function AccountCreation({navigation}) {
         if (user) {
         navigation.navigate('Homepage', { user });
         }
-    }, [user, ])
+    }, [user])
 
     
 
