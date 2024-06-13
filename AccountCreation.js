@@ -2,6 +2,8 @@ import { Button, ScrollView, Text} from 'react-native'
 import MyInput from './components/MyInput';
 import { useEffect, useState } from 'react';
 import RNFetchBlob from 'rn-fetch-blob';
+import CguCheckbox from './components/CguCheckbox';
+
 
 
 export default function AccountCreation({navigation}) {
@@ -14,7 +16,8 @@ export default function AccountCreation({navigation}) {
         emailAddress:"",
         password:"",
         passwordConfirmation:"",
-        socialSecurity:""
+        socialSecurity:"",
+        acceptCgu:false
     })
     const [error, setError] = useState("")
     const [user, setUser] = useState('')
@@ -48,7 +51,7 @@ export default function AccountCreation({navigation}) {
     handleSubmit = (() => {
         if (newUser.address && newUser.city && newUser.emailAddress && newUser.firstName && 
             newUser.gender && newUser.lastName && newUser.password && newUser.passwordConfirmation
-            && newUser.socialSecurity) {
+            && newUser.socialSecurity && newUser.acceptCgu=== true ) {
             if (newUser.password === newUser.passwordConfirmation) {
                 postUser()
             } else {
@@ -80,7 +83,12 @@ export default function AccountCreation({navigation}) {
             <MyInput label="Adresse email" placeholder="bdurant@caramail.com" inputMode="email" setNewUser={setNewUser} name="emailAddress"/>
             <MyInput label="Mot de passe" placeholder="" secure={true} setNewUser={setNewUser} name="password"/>
             <MyInput label="Vérification mot de passe" placeholder="" secure={true} setNewUser={setNewUser} name="passwordConfirmation"/>
-            {error && <Text style={{color:"red"}}>{error}</Text>}
+            <CguCheckbox setNewUser={setNewUser}/>
+            {error && <Text style={{
+                fontWeight:'bold', 
+                fontSize:20,
+                color:"red"
+                }}>{error}</Text>}
             <Button title="Créer mon compte" onPress={handleSubmit}/>
 
         </ScrollView>
