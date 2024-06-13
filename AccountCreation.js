@@ -83,7 +83,7 @@ export default function AccountCreation({navigation}) {
             <MyInput label="Adresse email" placeholder="bdurant@caramail.com" inputMode="email" setNewUser={setNewUser} name="emailAddress"/>
             <MyInput label="Mot de passe" placeholder="" secure={true} setNewUser={setNewUser} name="password"/>
             <MyInput label="Vérification mot de passe" placeholder="" secure={true} setNewUser={setNewUser} name="passwordConfirmation"/>
-            <CguCheckbox setNewUser={setNewUser}/>
+            <CguCheckbox setNewUser={setNewUser} navigation={navigation} />
             {error && <Text style={{
                 fontWeight:'bold', 
                 fontSize:20,

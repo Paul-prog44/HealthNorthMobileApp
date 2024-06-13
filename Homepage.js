@@ -1,4 +1,4 @@
-import {Image, Text, View, ScrollView, Button, FlatList} from 'react-native'
+import {Image, Text, View, ScrollView, Button} from 'react-native'
 import homepage from "./style"
 import { useEffect, useState } from 'react';
 import RNFetchBlob from 'rn-fetch-blob';
