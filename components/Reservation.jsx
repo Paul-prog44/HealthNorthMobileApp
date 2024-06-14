@@ -3,7 +3,7 @@ import RNFetchBlob from 'rn-fetch-blob';
 
 
 
-function Reservation({reservation, navigation}) {
+function Reservation({reservation, navigation, user}) {
     const dateString = reservation.date;
     const dateObject = new Date(dateString);
     const options = {

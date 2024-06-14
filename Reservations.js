@@ -37,7 +37,7 @@ export default function Reservations({route, navigation}) {
     <ScrollView style={{backgroundColor: 'rgb(169, 221, 242)'}}>
     {reservationsArray.length === 0 &&<Text>Vous n'avez pas de réservation</Text>}
       {reservationsArray.map((reservation, index) => (
-            <Reservation key={index} reservation={reservation} navigation={navigation}/>
+            <Reservation key={index} reservation={reservation} navigation={navigation} user={route.params}/>
           ))}
     </ScrollView>
   );
