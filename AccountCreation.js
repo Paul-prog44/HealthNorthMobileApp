@@ -38,7 +38,7 @@ export default function AccountCreation({navigation}) {
               let userArray = JSON.parse(resp.data)
               setUser(userArray)
             } else if (resp.respInfo.status === 409) {
-                setError("Cette adresse mail est déjaà associée à un compte, veuillez vous connecter.")
+                setError("Cette adresse mail est déjà associée à un compte, veuillez vous connecter.")
             } else {
                 setError("Une erreur est survenue, merci de réessayer")
             }
